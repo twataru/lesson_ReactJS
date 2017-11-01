@@ -1,0 +1,67 @@
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+  .text{
+    color: blue;
+  }
+</style>
+  <div id="contents"></div>
+  <script type="text/babel">
+
+    const TodoList = (props) =>　{
+      return(
+        <ul>
+        {props.items.map((item,index) => (
+          <li key={index}>{item}</li>
+        ))}
+        </ul>
+      );
+    }
+
+    class TodoApp extends React.Component{
+      constructor(props){
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.state = {items : [], text: ''};
+      }
+
+      render() {
+        return (
+          <div>
+            <h3>TODOアプリ</h3>
+            <p>{/*this.state.text*/}</p>
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <input onChange={this.handleChange} value={this.state.text}/>
+              <button>Add</button>
+            </form>
+            <TodoList items={this.state.items} />
+          </div>
+        );
+      }
+
+      handleChange(e){
+        this.setState({text: e.target.value});
+      }
+      handleSubmit(e){
+        e.preventDefault();
+        const newItem=this.state.text;
+        this.setState((prevState) =>({
+          items: prevState.items.concat(newItem),
+          text: ''
+        }));
+      }
+    }
+
+    ReactDOM.render(
+      //<TodoList items={text} />,
+      <TodoApp />,
+      document.getElementById('contents')
+    );
+  </script>
+</body>
+</html>
